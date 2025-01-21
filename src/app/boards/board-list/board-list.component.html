@@ -1,0 +1,16 @@
+<div class="container">
+  <!-- Sidebar -->
+  <nav class="sidebar">
+    <h2>Boards</h2>
+    <ul>
+      <li *ngFor="let board of boards">
+        <a [routerLink]="[board.id]" routerLinkActive="active">{{ board.name }}</a>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- Main Content -->
+  <div class="content">
+    <router-outlet></router-outlet>
+  </div>
+</div>

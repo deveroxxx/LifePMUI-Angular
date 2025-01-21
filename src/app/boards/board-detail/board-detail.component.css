@@ -1,0 +1,53 @@
+h2 {
+  margin-bottom: 20px;
+}
+
+h3 {
+  margin: 10px 0;
+  color: #333;
+}
+
+div[cdkDropList] {
+  border: 1px dashed #ddd;
+  padding: 10px;
+  margin-bottom: 20px;
+}
+
+div[cdkDrag] {
+  background-color: #f1f1f1;
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin: 5px 0;
+  cursor: grab;
+}
+
+.columns-container {
+  display: flex;
+  gap: 15px; /* Space between columns */
+  padding: 15px;
+  overflow-x: auto; /* Allow horizontal scrolling if columns overflow */
+}
+
+.column {
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 10px;
+  min-width: 250px;
+  flex-grow: 1;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.todo {
+  background-color: #ffffff;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  padding: 8px;
+  margin-bottom: 10px;
+  cursor: grab;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.todo:active {
+  cursor: grabbing;
+}
