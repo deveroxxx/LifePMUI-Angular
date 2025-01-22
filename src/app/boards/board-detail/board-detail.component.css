@@ -22,20 +22,24 @@ div[cdkDrag] {
 }
 
 .columns-container {
-  display: flex;
-  gap: 15px; /* Space between columns */
+  white-space: nowrap; /* Prevent wrapping */
   padding: 15px;
-  overflow-x: auto; /* Allow horizontal scrolling if columns overflow */
+  overflow-x: auto; /* Allow horizontal scrolling if content overflows */
 }
 
 .column {
+  display: inline-block; /* Align columns horizontally */
+  vertical-align: top; /* Align columns to the top */
   background-color: #f9f9f9;
   border: 1px solid #ddd;
   border-radius: 5px;
   padding: 10px;
-  min-width: 250px;
-  flex-grow: 1;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  min-width: 250px; /* Fixed width for columns */
+  margin-right: 15px; /* Space between columns */
+}
+
+.todos-container {
+  margin-top: 10px;
 }
 
 .todo {
@@ -45,7 +49,6 @@ div[cdkDrag] {
   padding: 8px;
   margin-bottom: 10px;
   cursor: grab;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
 }
 
 .todo:active {

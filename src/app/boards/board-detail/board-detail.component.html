@@ -1,10 +1,14 @@
-<h2>{{ board?.name }}</h2>
-<div class="columns-container" cdkDropListGroup>
-  <div *ngFor="let column of board?.columns" cdkDropList [cdkDropListData]="column.todos"
-       (cdkDropListDropped)="drop($event)">
-    <h3>{{ column.name }}</h3 >
-    <div *ngFor="let todo of column.todos" class="todo" cdkDrag>
-      {{ todo.title }}
+<div *ngIf="board">
+  <h2>{{ board.name }}</h2>
+  <div class="columns-container" cdkDropListGroup cdkDropList cdkDropListOrientation="horizontal" [cdkDropListData]="board.columns"
+       (cdkDropListDropped)="dropColumn($event)">
+    <div *ngFor="let column of board.columns" class="column" cdkDrag>
+      <h3>{{ column.name }}</h3>
+      <div class="todos-container" cdkDropList [cdkDropListData]="column.todos" [id]="column.id" (cdkDropListDropped)="dropTask($event)">
+        <div *ngFor="let todo of column.todos" class="example-custom-placeholder" cdkDrag>
+          {{ todo.title }}
+        </div>
+      </div>
     </div>
   </div>
 </div>

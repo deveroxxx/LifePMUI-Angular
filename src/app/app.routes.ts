@@ -10,7 +10,7 @@ export const routes: Routes = [
     path: 'boards',
     component: BoardListComponent, children: [
       {
-        path: ':id', // Child route for board details
+        path: ':id',
         component: BoardDetailComponent,
       },
     ],

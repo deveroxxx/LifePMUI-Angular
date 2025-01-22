@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import {BoardService} from '../../service/boardService';
-import {NgForOf} from '@angular/common';
+import {NgForOf, NgIf} from '@angular/common';
 import {
   CdkDrag,
   CdkDragDrop,
@@ -24,11 +24,12 @@ import {TodoDto} from '../../dto/todo-dto';
     NgForOf,
     CdkDropList,
     CdkDrag,
-    CdkDropListGroup
+    CdkDropListGroup,
+    NgIf
   ]
 })
 export class BoardDetailComponent implements OnInit {
-  board: BoardDto | undefined;
+  board!: BoardDto;
 
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
@@ -39,6 +40,10 @@ export class BoardDetailComponent implements OnInit {
 
   loadBoard(id: number): void {
     this.boardService.getBoardById(id).subscribe((data) => {
+      data.columns.sort((a, b) => a.position - b.position);
+      data.columns.forEach((column) => {
+        column.todos.sort((a, b) => a.position - b.position);
+      });
       this.board = data;
     });
   }
@@ -46,11 +51,23 @@ export class BoardDetailComponent implements OnInit {
   constructor(private route: ActivatedRoute, private boardService: BoardService) {
   }
 
-  drop(event: CdkDragDrop<TodoDto[], any>): void {
-    console.log('Dropped:', event);
-    console.log(event.container.data);
-    console.log("Previndex ", event.previousIndex, " Next index", event.currentIndex);
+  dropColumn(event: CdkDragDrop<BoardColumnDto[], any>): void {
+    moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+    const movedColdId = event.container.data[event.currentIndex]?.id
+    const pervColId = event.container.data[event.currentIndex-1]?.id
+    const nextColId = event.container.data[event.currentIndex+1]?.id
 
+    this.boardService
+      .updateColumnPosition(movedColdId, pervColId, nextColId)
+      .subscribe({
+        next: () => console.log('Order updated successfully'),
+        error: (err) => console.error('Failed to update order:', err),
+      });
+
+  }
+
+  dropTask(event: CdkDragDrop<TodoDto[], any>): void {
+    let newContainerId: string | undefined
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
@@ -60,6 +77,20 @@ export class BoardDetailComponent implements OnInit {
         event.previousIndex,
         event.currentIndex,
       );
+      newContainerId = event.container.id
     }
+
+    const movedColdId = event.container.data[event.currentIndex]?.id
+    const pervColId = event.container.data[event.currentIndex-1]?.id
+    const nextColId = event.container.data[event.currentIndex+1]?.id
+
+    this.boardService
+      .updateTodoPosition(movedColdId, pervColId, nextColId, newContainerId)
+      .subscribe({
+        next: () => console.log('Order updated successfully'),
+        error: (err) => console.error('Failed to update order:', err),
+      });
+
+
   }
 }
