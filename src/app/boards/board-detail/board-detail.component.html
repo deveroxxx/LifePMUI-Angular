@@ -1,14 +1,46 @@
 <div *ngIf="board">
-  <h2>{{ board.name }}</h2>
+  <!-- Board Title -->
+  <mat-toolbar color="primary">
+    <h2>{{ board.name }}</h2>
+  </mat-toolbar>
+
   <div class="columns-container" cdkDropListGroup cdkDropList cdkDropListOrientation="horizontal" [cdkDropListData]="board.columns"
        (cdkDropListDropped)="dropColumn($event)">
-    <div *ngFor="let column of board.columns" class="column" cdkDrag>
-      <h3>{{ column.name }}</h3>
+    <!-- Columns -->
+    <mat-card *ngFor="let column of board.columns" class="column" cdkDrag>
+      <mat-card-header>
+        <mat-card-title>{{ column.name }}</mat-card-title>
+        <mat-card-actions align="end">
+          <!-- Delete icon -->
+          <button mat-icon-button color="warn" (click)="openDeleteConfirmation(column.id)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </mat-card-actions>
+      </mat-card-header>
+
+      <mat-divider></mat-divider>
+
+      <!-- Todos -->
       <div class="todos-container" cdkDropList [cdkDropListData]="column.todos" [id]="column.id" (cdkDropListDropped)="dropTask($event)">
-        <div *ngFor="let todo of column.todos" class="example-custom-placeholder" cdkDrag>
-          {{ todo.title }}
+        <div *ngFor="let todo of column.todos" class="todo" cdkDrag>
+          <mat-card class="todo-card">
+            <mat-card-content>
+              {{ todo.title }}
+            </mat-card-content>
+          </mat-card>
         </div>
+        <app-editable-input
+          buttonLabel="+ Add todo"
+          placeholder="Todo Name"
+          (confirm)="addTodo($event, column)"
+        ></app-editable-input>
       </div>
-    </div>
+    </mat-card>
+
+    <app-editable-input
+      buttonLabel="+ Add Column"
+      placeholder="Column Name"
+      (confirm)="addColumn($event, board.id)"
+    ></app-editable-input>
   </div>
 </div>

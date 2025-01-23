@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import {ActivatedRoute} from '@angular/router';
 import {BoardService} from '../../service/boardService';
 import {NgForOf, NgIf} from '@angular/common';
 import {
@@ -13,6 +13,14 @@ import {
 import {BoardDto} from '../../dto/board-dto';
 import {BoardColumnDto} from '../../dto/board-column-dto';
 import {TodoDto} from '../../dto/todo-dto';
+import {MatIconButton} from '@angular/material/button';
+import {MatDivider} from '@angular/material/divider';
+import {MatCard, MatCardActions, MatCardContent, MatCardHeader, MatCardTitle} from '@angular/material/card';
+import {MatToolbar} from '@angular/material/toolbar';
+import {MatIcon} from '@angular/material/icon';
+import {MatDialog} from '@angular/material/dialog';
+import {DeleteConfirmationComponent} from '../../shared/delete-confirmation/delete-confirmation.component';
+import {EditableInputComponent} from '../../shared/editable-input/editable-input.component';
 
 
 @Component({
@@ -25,7 +33,17 @@ import {TodoDto} from '../../dto/todo-dto';
     CdkDropList,
     CdkDrag,
     CdkDropListGroup,
-    NgIf
+    NgIf,
+    MatDivider,
+    MatCardTitle,
+    MatCardHeader,
+    MatCard,
+    MatToolbar,
+    MatCardContent,
+    MatCardActions,
+    MatIcon,
+    MatIconButton,
+    EditableInputComponent
   ]
 })
 export class BoardDetailComponent implements OnInit {
@@ -48,14 +66,14 @@ export class BoardDetailComponent implements OnInit {
     });
   }
 
-  constructor(private route: ActivatedRoute, private boardService: BoardService) {
+  constructor(private route: ActivatedRoute, private boardService: BoardService, private dialog: MatDialog) {
   }
 
   dropColumn(event: CdkDragDrop<BoardColumnDto[], any>): void {
     moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     const movedColdId = event.container.data[event.currentIndex]?.id
-    const pervColId = event.container.data[event.currentIndex-1]?.id
-    const nextColId = event.container.data[event.currentIndex+1]?.id
+    const pervColId = event.container.data[event.currentIndex - 1]?.id
+    const nextColId = event.container.data[event.currentIndex + 1]?.id
 
     this.boardService
       .updateColumnPosition(movedColdId, pervColId, nextColId)
@@ -81,8 +99,8 @@ export class BoardDetailComponent implements OnInit {
     }
 
     const movedColdId = event.container.data[event.currentIndex]?.id
-    const pervColId = event.container.data[event.currentIndex-1]?.id
-    const nextColId = event.container.data[event.currentIndex+1]?.id
+    const pervColId = event.container.data[event.currentIndex - 1]?.id
+    const nextColId = event.container.data[event.currentIndex + 1]?.id
 
     this.boardService
       .updateTodoPosition(movedColdId, pervColId, nextColId, newContainerId)
@@ -92,5 +110,41 @@ export class BoardDetailComponent implements OnInit {
       });
 
 
+  }
+
+  addColumn($event: string, boardId: string) {
+    this.boardService.createColumn($event, boardId).subscribe({
+      next: (b) => {
+        this.board.columns.push(b);
+      },
+      error: (err) => console.error('Failed to add column:', err),
+    });
+  }
+
+  addTodo($event: string, column: BoardColumnDto) {
+    this.boardService.createTodo($event, column.id).subscribe({
+      next: (t) => {
+        column.todos.push(t)
+      },
+      error: (err) => console.error('Failed to add todo:', err),
+    });
+  }
+
+  deleteColumn(columnId: string) {
+    this.boardService.deleteColumn(columnId).subscribe({
+      next: () => {
+        this.board.columns = this.board.columns.filter((col) => col.id !== columnId);
+      },
+      error: (err) => console.error('Failed to add column:', err),
+    });
+  }
+
+  openDeleteConfirmation(id: string): void {
+    const dialogRef = this.dialog.open(DeleteConfirmationComponent);
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.deleteColumn(id);
+      }
+    });
   }
 }

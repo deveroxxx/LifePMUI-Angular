@@ -13,6 +13,7 @@ div[cdkDropList] {
   margin-bottom: 20px;
 }
 
+
 div[cdkDrag] {
   background-color: #f1f1f1;
   border: 1px solid #ccc;
@@ -22,20 +23,16 @@ div[cdkDrag] {
 }
 
 .columns-container {
-  white-space: nowrap; /* Prevent wrapping */
+  display: flex;
+  align-items: flex-start; /* Align columns and button to the top */
+  gap: 15px; /* Space between columns and button */
   padding: 15px;
-  overflow-x: auto; /* Allow horizontal scrolling if content overflows */
+  overflow-x: auto; /* Allow scrolling if content overflows */
 }
 
 .column {
-  display: inline-block; /* Align columns horizontally */
-  vertical-align: top; /* Align columns to the top */
-  background-color: #f9f9f9;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  padding: 10px;
-  min-width: 250px; /* Fixed width for columns */
-  margin-right: 15px; /* Space between columns */
+  width: 300px;
+  flex-shrink: 0;
 }
 
 .todos-container {
@@ -43,14 +40,39 @@ div[cdkDrag] {
 }
 
 .todo {
-  background-color: #ffffff;
-  border: 1px solid #ccc;
-  border-radius: 3px;
-  padding: 8px;
-  margin-bottom: 10px;
-  cursor: grab;
+  margin-bottom: 10px; /* Add spacing between todos */
+}
+
+.todo-card {
+  background-color: #ffffff; /* White background for contrast */
+  border: 1px solid #e0e0e0; /* Light gray border for separation */
+  border-radius: 5px; /* Rounded corners for a softer look */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  padding: 10px; /* Add padding inside the card */
+  cursor: move; /* Show move cursor for draggable items */
+  transition: transform 0.2s ease, box-shadow 0.2s ease; /* Smooth animation */
+}
+
+.add-column-button {
+  align-self: flex-start; /* Align button with the top of the columns */
+  min-width: 150px;
+  height: auto;
+  font-size: 20px;
+  margin: 5px 0;
 }
 
 .todo:active {
   cursor: grabbing;
+}
+
+.todo-card:hover {
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Increase shadow on hover */
+  transform: translateY(-2px); /* Slight lift effect on hover */
+}
+
+.cdk-drag-placeholder {
+  background-color: #e0e0e0;
+  border: 2px dashed #bdbdbd;
+  height: 50px;
+  margin: 5px 0;
 }
