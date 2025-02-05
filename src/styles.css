@@ -23,5 +23,13 @@ a.active {
   color: #007bff;
 }
 
+.fail-snackbar {
+  --mdc-snackbar-container-color: #b50000 !important;
+  --mdc-snackbar-supporting-text-color: #ffffff !important;
+  --mat-mdc-snack-bar-button-color: white !important;
+  white-space: pre-wrap
+}
+
+
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

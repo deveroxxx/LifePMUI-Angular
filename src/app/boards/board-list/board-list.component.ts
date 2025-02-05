@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {BoardService} from '../../service/boardService';
+import {BoardService} from '../../service/board.service';
 import {RouterLink, RouterLinkActive, RouterOutlet} from '@angular/router';
 import {NgForOf} from '@angular/common';
 

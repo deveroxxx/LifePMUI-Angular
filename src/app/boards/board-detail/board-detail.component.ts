@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {BoardService} from '../../service/boardService';
+import {BoardService} from '../../service/board.service';
 import {NgForOf, NgIf} from '@angular/common';
 import {
   CdkDrag,

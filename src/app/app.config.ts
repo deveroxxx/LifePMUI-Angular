@@ -1,16 +1,25 @@
 import {ApplicationConfig, provideZoneChangeDetection} from '@angular/core';
 import {provideRouter} from '@angular/router';
-import {provideHttpClient, withFetch} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, provideHttpClient, withFetch, withInterceptorsFromDi} from '@angular/common/http';
 
 import {routes} from './app.routes';
 import {provideClientHydration, withEventReplay} from '@angular/platform-browser';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import {ErrorHandlerInterceptor} from './interceptors/error.handler.service';
+import {AuthInterceptor} from './interceptors/auth.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({eventCoalescing: true}),
     provideRouter(routes),
     provideClientHydration(withEventReplay()),
-    provideHttpClient(withFetch()), provideAnimationsAsync(),
+    provideHttpClient(withFetch(), withInterceptorsFromDi()),
+    provideAnimationsAsync(),
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorHandlerInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
   ]
 };
+
+// export const baseUrl = 'http://localhost:8080';
+export const baseUrl = '';
+export const baseApiUrl = baseUrl + '/api';

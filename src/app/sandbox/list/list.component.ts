@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {CdkDragDrop, CdkDropList, CdkDrag, moveItemInArray} from '@angular/cdk/drag-drop';
-import {BoardService} from '../../service/boardService';
+import {BoardService} from '../../service/board.service';
 
 /**
  * @title Drag&Drop sorting
