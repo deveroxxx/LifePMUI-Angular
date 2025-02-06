@@ -2,6 +2,9 @@
   <!-- Board Title -->
   <mat-toolbar color="primary">
     <h2>{{ board.name }}</h2>
+    <button mat-icon-button color="warn" (click)="openDeleteBoardConfirmation(board.id)">
+      <mat-icon>delete</mat-icon>
+    </button>
   </mat-toolbar>
 
   <div class="columns-container" cdkDropListGroup cdkDropList cdkDropListOrientation="horizontal" [cdkDropListData]="board.columns"
@@ -11,8 +14,7 @@
       <mat-card-header>
         <mat-card-title>{{ column.name }}</mat-card-title>
         <mat-card-actions align="end">
-          <!-- Delete icon -->
-          <button mat-icon-button color="warn" (click)="openDeleteConfirmation(column.id)">
+          <button mat-icon-button color="warn" (click)="openDeleteColumnConfirmation(column.id)">
             <mat-icon>delete</mat-icon>
           </button>
         </mat-card-actions>

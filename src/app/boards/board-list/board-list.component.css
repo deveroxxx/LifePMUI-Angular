@@ -10,3 +10,46 @@ ul {
 li {
   margin: 5px 0;
 }
+
+.mat-sidenav {
+  background-color: #2c3e50; /* Dark Blue */
+  color: white; /* Make text readable */
+  width: 280px; /* Adjust width if needed */
+  padding: 20px;
+}
+
+.mat-sidenav h2 {
+  color: white;
+}
+
+.mat-sidenav ul {
+  list-style: none;
+  padding: 0;
+}
+
+.mat-sidenav ul li a {
+  color: white;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  transition: background 0.3s;
+}
+
+.mat-sidenav ul li a:hover {
+  background: #8fb3cf; /* Slightly lighter blue */
+  border-radius: 5px;
+}
+
+.toggle-button {
+  position: absolute;
+  top: 0;
+  left: -20px;
+  z-index: 1000; /* Ensure it's above other content */
+  background: transparent;
+  color: #4a1111;
+}
+
+.toggle-button mat-icon {
+  font-size: 28px; /* Make the icon slightly larger */
+}

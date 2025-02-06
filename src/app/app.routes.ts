@@ -14,7 +14,6 @@ export const routes: Routes = [
   {
     path: 'boards',
     component: BoardListComponent,
-    // canActivate: [AuthGuard],
     children: [
       {
         path: ':id',

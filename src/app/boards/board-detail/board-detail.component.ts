@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {BoardService} from '../../service/board.service';
 import {NgForOf, NgIf} from '@angular/common';
 import {
@@ -66,7 +66,7 @@ export class BoardDetailComponent implements OnInit {
     });
   }
 
-  constructor(private route: ActivatedRoute, private boardService: BoardService, private dialog: MatDialog) {
+  constructor(private route: ActivatedRoute, private boardService: BoardService, private dialog: MatDialog, private router: Router) {
   }
 
   dropColumn(event: CdkDragDrop<BoardColumnDto[], any>): void {
@@ -130,21 +130,39 @@ export class BoardDetailComponent implements OnInit {
     });
   }
 
-  deleteColumn(columnId: string) {
-    this.boardService.deleteColumn(columnId).subscribe({
-      next: () => {
-        this.board.columns = this.board.columns.filter((col) => col.id !== columnId);
-      },
-      error: (err) => console.error('Failed to add column:', err),
-    });
-  }
-
-  openDeleteConfirmation(id: string): void {
+  openDeleteColumnConfirmation(id: string): void {
     const dialogRef = this.dialog.open(DeleteConfirmationComponent);
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         this.deleteColumn(id);
       }
+    });
+  }
+
+  deleteColumn(columnId: string) {
+    this.boardService.deleteColumn(columnId).subscribe({
+      next: () => {
+        this.board.columns = this.board.columns.filter((col) => col.id !== columnId);
+      },
+      error: (err) => console.error('Failed to delete column:', err),
+    });
+  }
+
+  openDeleteBoardConfirmation(id: string): void {
+    const dialogRef = this.dialog.open(DeleteConfirmationComponent);
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.deleteBoard(id);
+      }
+    });
+  }
+
+  deleteBoard(boardId: string) {
+    this.boardService.deleteBoard(boardId).subscribe({
+      next: () => {
+        this.router.navigate(['/boards']);
+      },
+      error: (err) => console.error('Failed to delete board:', err),
     });
   }
 }
