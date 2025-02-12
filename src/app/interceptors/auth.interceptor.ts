@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/common/http';
-import {EMPTY, from, Observable, switchMap, throwError} from 'rxjs';
+import {EMPTY, from, Observable, switchMap} from 'rxjs';
 import {AuthService} from '../service/auth.service';
 import {catchError} from 'rxjs/operators';
 import {Router} from '@angular/router';
@@ -12,7 +12,7 @@ export class AuthInterceptor implements HttpInterceptor {
   constructor(private authService: AuthService, private router: Router, private snackBar: MatSnackBar) { }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const authUrls = ['/auth/login', '/auth/refresh-token']; // Skip these endpoints
+    const authUrls = ['/auth/login', '/auth/signup', '/auth/refresh-token']; // Skip these endpoints
     if (authUrls.some(url => req.url.includes(url))) {
       return next.handle(req);
     }
