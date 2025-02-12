@@ -21,6 +21,7 @@ import {MatIcon} from '@angular/material/icon';
 import {MatDialog} from '@angular/material/dialog';
 import {DeleteConfirmationComponent} from '../../shared/delete-confirmation/delete-confirmation.component';
 import {EditableInputComponent} from '../../shared/editable-input/editable-input.component';
+import {TodoDetailDialogComponent} from '../todo-detail-dialog/todo-detail-dialog.component';
 
 
 @Component({
@@ -165,4 +166,19 @@ export class BoardDetailComponent implements OnInit {
       error: (err) => console.error('Failed to delete board:', err),
     });
   }
+
+  openTodoDetails(todo: any): void {
+    const dialogRef = this.dialog.open(TodoDetailDialogComponent, {
+      width: '400px',
+      data: {title: todo.title, description: todo.description || ''},
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        todo.title = result.title;
+        todo.description = result.description;
+      }
+    });
+  }
+  
 }

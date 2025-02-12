@@ -24,7 +24,7 @@
 
       <!-- Todos -->
       <div class="todos-container" cdkDropList [cdkDropListData]="column.todos" [id]="column.id" (cdkDropListDropped)="dropTask($event)">
-        <div *ngFor="let todo of column.todos" class="todo" cdkDrag>
+        <div *ngFor="let todo of column.todos" class="todo" cdkDrag (click)="openTodoDetails(todo)">
           <mat-card class="todo-card">
             <mat-card-content>
               {{ todo.title }}
