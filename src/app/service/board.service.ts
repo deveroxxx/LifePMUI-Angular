@@ -11,12 +11,14 @@ import {baseApiUrl} from '../app.config';
 })
 export class BoardService {
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient) { }
+
+  init(){
     this.loadBoards();
   }
 
   addBoard(name: string) {
-    this.http.post<BoardDto>(`${baseApiUrl}/board/create`, { name }).subscribe({
+    this.http.post<BoardDto>(`${baseApiUrl}/boards`, { name }).subscribe({
       next: (b) => {
         const updatedBoards = [...this.boardsSubject.value, b];
         this.boardsSubject.next(updatedBoards);
@@ -29,49 +31,20 @@ export class BoardService {
   boards$ = this.boardsSubject.asObservable();
 
   private loadBoards() {
-    this.http.get<BoardDto[]>(`${baseApiUrl}/board/all`).subscribe(boards => {
+    this.http.get<BoardDto[]>(`${baseApiUrl}/boards`).subscribe(boards => {
       this.boardsSubject.next(boards);
     });
   }
 
   getBoardById(id: number): Observable<BoardDto> {
-    return this.http.get<BoardDto>(`${baseApiUrl}/board/${id}`);
+    return this.http.get<BoardDto>(`${baseApiUrl}/boards/${id}`);
   }
 
-  updateColumnPosition(movedItemId: string, previousItemId: string, nextItemId: string): Observable<void> {
-    const payload = {
-      movedItemId,
-      previousItemId,
-      nextItemId
-    };
-    return this.http.put<void>(`${baseApiUrl}/board-column/update-position`, payload);
-  }
 
-  updateTodoPosition(movedItemId: string, previousItemId: string, nextItemId: string, newColumnId?: string): Observable<void> {
-    const payload = {
-      movedItemId,
-      previousItemId,
-      nextItemId,
-      newColumnId
-    };
-
-    return this.http.put<void>(`${baseApiUrl}/todo/update-position`, payload);
-  }
-
-  createColumn(name: string, boardId: string) {
-    return this.http.post<BoardColumnDto>(`${baseApiUrl}/board-column/create`, {name, boardId});
-  }
-
-  createTodo(name: string, columnId: string) {
-    return this.http.post<TodoDto>(`${baseApiUrl}/todo/create`, {name, columnId});
-  }
-
-  deleteColumn(columnId: string) {
-    return this.http.delete<void>(`${baseApiUrl}/board-column/delete/${columnId}`);
-  }
+  // editBoard(id: number??)
 
   deleteBoard(boardId: string): Observable<void> {
-    return this.http.delete<void>(`${baseApiUrl}/board/delete/${boardId}`).pipe(
+    return this.http.delete<void>(`${baseApiUrl}/boards/${boardId}`).pipe(
       tap(() => {
         const updatedBoards = this.boardsSubject.value.filter(b => b.id !== boardId);
         this.boardsSubject.next(updatedBoards);

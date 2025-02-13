@@ -22,6 +22,8 @@ import {MatDialog} from '@angular/material/dialog';
 import {DeleteConfirmationComponent} from '../../shared/delete-confirmation/delete-confirmation.component';
 import {EditableInputComponent} from '../../shared/editable-input/editable-input.component';
 import {TodoDetailDialogComponent} from '../todo-detail-dialog/todo-detail-dialog.component';
+import { BoardColumnService } from '../../service/board-column.service';
+import { TodoService } from '../../service/todo.service';
 
 
 @Component({
@@ -67,7 +69,13 @@ export class BoardDetailComponent implements OnInit {
     });
   }
 
-  constructor(private route: ActivatedRoute, private boardService: BoardService, private dialog: MatDialog, private router: Router) {
+  constructor(
+    private route: ActivatedRoute,
+    private boardService: BoardService,
+    private boardColumnService: BoardColumnService,
+    private todoService: TodoService,
+    private dialog: MatDialog,
+    private router: Router) {
   }
 
   dropColumn(event: CdkDragDrop<BoardColumnDto[], any>): void {
@@ -76,7 +84,7 @@ export class BoardDetailComponent implements OnInit {
     const pervColId = event.container.data[event.currentIndex - 1]?.id
     const nextColId = event.container.data[event.currentIndex + 1]?.id
 
-    this.boardService
+    this.boardColumnService
       .updateColumnPosition(movedColdId, pervColId, nextColId)
       .subscribe({
         next: () => console.log('Order updated successfully'),
@@ -103,7 +111,7 @@ export class BoardDetailComponent implements OnInit {
     const pervColId = event.container.data[event.currentIndex - 1]?.id
     const nextColId = event.container.data[event.currentIndex + 1]?.id
 
-    this.boardService
+    this.todoService
       .updateTodoPosition(movedColdId, pervColId, nextColId, newContainerId)
       .subscribe({
         next: () => console.log('Order updated successfully'),
@@ -114,7 +122,7 @@ export class BoardDetailComponent implements OnInit {
   }
 
   addColumn($event: string, boardId: string) {
-    this.boardService.createColumn($event, boardId).subscribe({
+    this.boardColumnService.createColumn($event, boardId).subscribe({
       next: (b) => {
         this.board.columns.push(b);
       },
@@ -123,7 +131,7 @@ export class BoardDetailComponent implements OnInit {
   }
 
   addTodo($event: string, column: BoardColumnDto) {
-    this.boardService.createTodo($event, column.id).subscribe({
+    this.todoService.createTodo($event, column.id).subscribe({
       next: (t) => {
         column.todos.push(t)
       },
@@ -141,7 +149,7 @@ export class BoardDetailComponent implements OnInit {
   }
 
   deleteColumn(columnId: string) {
-    this.boardService.deleteColumn(columnId).subscribe({
+    this.boardColumnService.deleteColumn(columnId).subscribe({
       next: () => {
         this.board.columns = this.board.columns.filter((col) => col.id !== columnId);
       },
