@@ -1,4 +1,4 @@
-import {ApplicationConfig, provideZoneChangeDetection} from '@angular/core';
+import {ApplicationConfig, importProvidersFrom, provideZoneChangeDetection} from '@angular/core';
 import {provideRouter} from '@angular/router';
 import {HTTP_INTERCEPTORS, provideHttpClient, withFetch, withInterceptorsFromDi} from '@angular/common/http';
 
@@ -7,6 +7,7 @@ import {provideClientHydration, withEventReplay} from '@angular/platform-browser
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import {ErrorHandlerInterceptor} from './interceptors/error.handler.service';
 import {AuthInterceptor} from './interceptors/auth.interceptor';
+import { QuillModule } from 'ngx-quill';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -16,7 +17,12 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(withFetch(), withInterceptorsFromDi()),
     provideAnimationsAsync(),
     { provide: HTTP_INTERCEPTORS, useClass: ErrorHandlerInterceptor, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    importProvidersFrom(QuillModule.forRoot({
+      modules: {
+        toolbar: true
+      }
+    }))
   ]
 };
 

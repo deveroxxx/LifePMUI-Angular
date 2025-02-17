@@ -177,8 +177,9 @@ export class BoardDetailComponent implements OnInit {
 
   openTodoDetails(todo: any): void {
     const dialogRef = this.dialog.open(TodoDetailDialogComponent, {
-      width: '400px',
-      data: {title: todo.title, description: todo.description || ''},
+      width: '800px',
+      maxWidth: 'none',
+      data: todo,
     });
 
     dialogRef.afterClosed().subscribe(result => {

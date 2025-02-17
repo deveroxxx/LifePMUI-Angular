@@ -24,8 +24,9 @@ export class TodoService {
 
   // get one todo
 
-  updateTodo(id: string, title: string, description: string): Observable<TodoDto> {
-    return this.http.patch<TodoDto>(`${baseApiUrl}/todos/${id}`, { title, description }).pipe(
+  updateTodo(id: string, patchData: any): Observable<TodoDto> {
+    console.log("updatecall")
+    return this.http.patch<TodoDto>(`${baseApiUrl}/todos/${id}`, { description: patchData.description }).pipe(
       tap(updatedTodo => {
         const updatedTodos = this.todosSubject.value.map(todo => 
           todo.id === id ? updatedTodo : todo

@@ -1,0 +1,24 @@
+.full-width {
+    width: 100%;
+  }
+  .wide-title {
+    width: 100%;
+  }
+  .description-container {
+    width: 100%;
+    margin-top: 16px;
+  }
+  .description-label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 4px;
+  }
+  .description-editor {
+    width:100%;
+  }
+  .formatted-text {
+    padding: 8px;
+    border: 1px solid #ccc;
+    min-height: 50px;
+    cursor: pointer;
+  }

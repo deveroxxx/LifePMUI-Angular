@@ -13,10 +13,6 @@ export class BoardService {
 
   constructor(private http: HttpClient) { }
 
-  init(){
-    this.loadBoards();
-  }
-
   addBoard(name: string) {
     this.http.post<BoardDto>(`${baseApiUrl}/boards`, { name }).subscribe({
       next: (b) => {
@@ -30,7 +26,7 @@ export class BoardService {
   private boardsSubject = new BehaviorSubject<BoardDto[]>([]);
   boards$ = this.boardsSubject.asObservable();
 
-  private loadBoards() {
+  loadBoards() {
     this.http.get<BoardDto[]>(`${baseApiUrl}/boards`).subscribe(boards => {
       this.boardsSubject.next(boards);
     });

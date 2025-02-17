@@ -32,6 +32,7 @@ export class BoardListComponent implements OnInit {
   constructor(private boardService: BoardService) {}
 
   ngOnInit(): void {
+    this.boardService.loadBoards();
     this.boardService.boards$.subscribe(boards => {
       this.boards = boards;
     });
