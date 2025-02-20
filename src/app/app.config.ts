@@ -20,7 +20,17 @@ export const appConfig: ApplicationConfig = {
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     importProvidersFrom(QuillModule.forRoot({
       modules: {
-        toolbar: true
+        toolbar: {
+          container: [['bold', 'italic', 'underline', 'strike'],       
+          ['blockquote', 'code-block'],
+      
+          [{ 'color': [] }, { 'background': [] }],         
+          [{ 'font': [] }],
+          [{ 'align': [] }],
+      
+          ['clean'],                                        
+          ['image']]
+        }
       }
     }))
   ]

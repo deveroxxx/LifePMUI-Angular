@@ -56,10 +56,11 @@ export class TodoService {
     return this.http.put<void>(`${baseApiUrl}/todos/${movedItemId}/reorder`, payload);
   }
 
-  uploadImage(todoId: string, file: File): Observable<{ imageUrl: string }> {
+  uploadImage(todoId: string, file: File): Observable<{ url: string }> {
+    console.log("file sent")
     const formData = new FormData();
-    formData.append('image', file);
+    formData.append('file', file);
 
-    return this.http.post<{ imageUrl: string }>(`${baseApiUrl}/todos/${todoId}/upload-image`, formData);
+    return this.http.post<{ url: string }>(`${baseApiUrl}/todos/${todoId}/images`, formData);
   }
 }

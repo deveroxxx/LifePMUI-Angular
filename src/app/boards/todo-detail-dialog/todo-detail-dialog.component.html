@@ -7,10 +7,8 @@
 
   <div class="description-container">
     <label class="description-label">Description</label>
-    <div *ngIf="!isEditing" class="formatted-text" (click)="toggleEdit()">
-      {{ data.description || 'Click to edit description...' }}
-    </div>
-    <quill-editor class="description-editor" *ngIf="isEditing" [(ngModel)]="data.description"></quill-editor>
+    <div *ngIf="!isEditing" class="formatted-text" (mousedown)="toggleEdit()" [innerHTML]="sanitizedDescription"></div>
+    <quill-editor class="description-editor" *ngIf="isEditing" [(ngModel)]="data.description" (onEditorCreated)="onEditorCreated($event)"></quill-editor>
   </div>
 </mat-dialog-content>
 
