@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {BehaviorSubject, Observable, tap} from 'rxjs';
-import {BoardDto} from '../dto/board-dto';
+import {BoardDto, BoardUser} from '../dto/board-dto';
 import {BoardColumnDto} from '../dto/board-column-dto';
 import {TodoDto} from '../dto/todo-dto';
 import {baseApiUrl} from '../app.config';
@@ -46,6 +46,18 @@ export class BoardService {
         this.boardsSubject.next(updatedBoards);
       })
     );
+  }
+
+  getBoardUsers(boardId: number | string): Observable<BoardUser[]> {
+    return this.http.get<BoardUser[]>(`${baseApiUrl}/boards/${boardId}/users`);
+  }
+
+  addBoardUser(boardId: number | string, userName: string, permission: string): Observable<any> {
+    return this.http.post(`${baseApiUrl}/boards/${boardId}/users/${userName}`, { permission });
+  }
+
+  removeBoardUser(boardId: number | string, userName: string): Observable<any> {
+    return this.http.delete(`${baseApiUrl}/boards/${boardId}/users/${userName}`);
   }
 
   printNumber(id: number): any {

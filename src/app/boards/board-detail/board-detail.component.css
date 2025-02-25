@@ -76,3 +76,7 @@ div[cdkDrag] {
   height: 50px;
   margin: 5px 0;
 }
+
+.spacer {
+  flex: 1 1 auto;
+}

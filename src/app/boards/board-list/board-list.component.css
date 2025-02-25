@@ -53,3 +53,7 @@ li {
 .toggle-button mat-icon {
   font-size: 28px; /* Make the icon slightly larger */
 }
+
+.sidenav-container {
+  width:100%;
+}

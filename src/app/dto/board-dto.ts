@@ -20,3 +20,11 @@ export class BoardDto {
         return `Board: ${this.name} (${this.id})`;
     }
 }
+
+
+export class BoardUser {
+    constructor(
+        public userName: string,
+        public  permission: string,
+    ) {}
+}

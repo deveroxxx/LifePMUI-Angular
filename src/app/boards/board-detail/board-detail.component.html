@@ -1,9 +1,12 @@
 <div *ngIf="board">
-  <!-- Board Title -->
   <mat-toolbar color="primary">
     <h2>{{ board.name }}</h2>
     <button mat-icon-button color="warn" (click)="openDeleteBoardConfirmation(board.id)">
       <mat-icon>delete</mat-icon>
+    </button>
+    <span class="spacer"></span>
+    <button mat-icon-button (click)="openAccessRights()">
+      <mat-icon>settings</mat-icon>
     </button>
   </mat-toolbar>
 

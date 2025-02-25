@@ -24,6 +24,7 @@ import {EditableInputComponent} from '../../shared/editable-input/editable-input
 import {TodoDetailDialogComponent} from '../todo-detail-dialog/todo-detail-dialog.component';
 import { BoardColumnService } from '../../service/board-column.service';
 import { TodoService } from '../../service/todo.service';
+import { BoardAccessDialogComponent } from '../board-access-dialog/board-access-dialog.component';
 
 
 @Component({
@@ -187,6 +188,14 @@ export class BoardDetailComponent implements OnInit {
         todo.title = result.title;
         todo.description = result.description;
       }
+    });
+  }
+
+  openAccessRights(){
+    const dialogRef = this.dialog.open(BoardAccessDialogComponent, {
+      width: '800px',
+      maxWidth: 'none',
+      data: this.board,
     });
   }
   

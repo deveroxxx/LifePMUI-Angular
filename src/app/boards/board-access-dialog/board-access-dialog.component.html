@@ -1,0 +1,38 @@
+<h2 mat-dialog-title>Board Access</h2>
+<mat-dialog-content>
+  <mat-form-field appearance="fill" class="full-width">
+    <mat-label>Username</mat-label>
+    <input matInput [(ngModel)]="newUserName" placeholder="Enter username" />
+  </mat-form-field>
+  <mat-form-field appearance="fill" class="full-width">
+    <mat-label>Permission</mat-label>
+    <mat-select [(ngModel)]="permission">
+      <mat-option *ngFor="let option of permissionOptions" [value]="option">
+        {{ permissionMapping[option] }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <button mat-button color="primary" (click)="inviteUser()">Invite</button>
+
+  <div class="users-list" *ngIf="boardUsers.length > 0">
+    <h3>Invited Users</h3>
+    <li>
+      <ul *ngFor="let user of boardUsers">
+        <div class="user-info">
+            <span>
+                  {{ user.userName }}  -  {{ permissionMapping[user.permission] }}
+            </span>
+        </div>
+        <button mat-icon-button color="warn" (click)="removeUser(user.userName)">
+          <mat-icon>delete</mat-icon>
+        </button>
+    </ul>
+    </li>
+  </div>
+  <div *ngIf="boardUsers.length === 0">
+    No invited users.
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button (click)="dialogRef.close()">Close</button>
+</mat-dialog-actions>
