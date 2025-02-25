@@ -7,12 +7,14 @@
 
   <div class="description-container">
     <label class="description-label">Description</label>
-    <div *ngIf="!isEditing" class="formatted-text" (mousedown)="toggleEdit()" [innerHTML]="sanitizedDescription"></div>
-    <quill-editor class="description-editor" *ngIf="isEditing" [(ngModel)]="data.description" (onEditorCreated)="onEditorCreated($event)"></quill-editor>
+    <app-quill-editor-wrapper 
+      [(ngModel)]="data.description"
+      [dataId]="data.id"
+      [onSaveAction]="saveTodo"
+      (valueChange)="data.description = $event">
+  </app-quill-editor-wrapper>
   </div>
-</mat-dialog-content>
 
-<mat-dialog-actions align="end">
-  <button mat-button (click)="onClose()">Cancel</button>
-  <button mat-button color="primary" (click)="onSave()">Save</button>
-</mat-dialog-actions>
+  <h2>Comments</h2>
+  <app-comments [todoId]="data.id"></app-comments>
+</mat-dialog-content>

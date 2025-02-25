@@ -1,0 +1,13 @@
+
+.description-editor {
+width:100%;
+}
+.description-editor-inner {
+width:100%;
+}
+.formatted-text {
+padding: 12px 15px;
+border: 1px solid #ccc;
+min-height: 50px;
+cursor: pointer;
+}

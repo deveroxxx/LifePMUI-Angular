@@ -4,6 +4,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { TodoDto } from '../dto/todo-dto';
 import { baseApiUrl } from '../app.config';
+import { TodoCommentDto } from '../dto/todo-comment-dto';
 
 @Injectable({
   providedIn: 'root',
@@ -25,7 +26,6 @@ export class TodoService {
   // get one todo
 
   updateTodo(id: string, patchData: any): Observable<TodoDto> {
-    console.log("updatecall")
     return this.http.patch<TodoDto>(`${baseApiUrl}/todos/${id}`, { description: patchData.description }).pipe(
       tap(updatedTodo => {
         const updatedTodos = this.todosSubject.value.map(todo => 
@@ -57,10 +57,22 @@ export class TodoService {
   }
 
   uploadImage(todoId: string, file: File): Observable<{ url: string }> {
-    console.log("file sent")
     const formData = new FormData();
     formData.append('file', file);
 
     return this.http.post<{ url: string }>(`${baseApiUrl}/todos/${todoId}/images`, formData);
+  }
+
+
+  getCommentsForTodo(todoId: string): Observable<TodoCommentDto[]> {
+    return this.http.get<TodoCommentDto[]>(`${baseApiUrl}/todos/${todoId}/comments`);
+  }
+
+  newComment(todoId: string, commentBody: any): Observable<TodoCommentDto[]> {
+    return this.http.post<TodoCommentDto[]>(`${baseApiUrl}/todos/${todoId}/comments`, commentBody);
+  }
+
+  editComment(todoId: string, commentBody: any): Observable<TodoCommentDto[]> {
+    return this.http.patch<TodoCommentDto[]>(`${baseApiUrl}/todos/${todoId}/comments/${todoId}`, commentBody);
   }
 }

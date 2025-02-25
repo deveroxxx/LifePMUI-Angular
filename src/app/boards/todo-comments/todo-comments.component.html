@@ -1,0 +1,22 @@
+<div class="new-comment">
+    <app-quill-editor-wrapper 
+      [(ngModel)]="newCommentContent"
+      [dataId]="todoId"
+      [onSaveAction]="saveNewComment">
+    </app-quill-editor-wrapper>
+  </div>
+
+<div *ngFor="let comment of comments" class="comment-item">
+    <!-- Display the user name of the commenter -->
+    <div class="comment-header">
+      <strong>{{ comment.userName }}</strong>
+    </div>
+    <!-- Use the quill editor wrapper to display (and possibly edit) the comment content.
+         The editor is only editable if the comment is owned by the current user -->
+    <app-quill-editor-wrapper 
+      [(ngModel)]="comment.content"
+      [dataId]="comment.id"
+      [onSaveAction]="saveEditComment"
+      >
+    </app-quill-editor-wrapper>
+  </div>

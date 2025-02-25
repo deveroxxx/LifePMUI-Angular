@@ -1,0 +1,17 @@
+<div class="description-container">
+    <!-- Display mode: show sanitized content and toggle edit on click -->
+    <div *ngIf="!isEditing" class="formatted-text" (mousedown)="toggleEdit()" [innerHTML]="sanitizedContent"></div>
+    
+    <!-- Edit mode: show the Quill editor -->
+    <div *ngIf="isEditing" class="description-editor">
+        <quill-editor
+        class="description-editor-inner"
+        *ngIf="isEditing"
+        [(ngModel)]="value"
+        (onEditorCreated)="onEditorCreated($event)"
+        (blur)="toggleEdit()">
+    </quill-editor>
+    <button mat-button color="primary" (click)="onSave()">Save</button>
+    <button mat-button (click)="onClose()">Cancel</button>
+    </div>
+  </div>
