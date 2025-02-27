@@ -72,7 +72,7 @@ export class TodoService {
     return this.http.post<TodoCommentDto[]>(`${baseApiUrl}/todos/${todoId}/comments`, commentBody);
   }
 
-  editComment(todoId: string, commentBody: any): Observable<TodoCommentDto[]> {
-    return this.http.patch<TodoCommentDto[]>(`${baseApiUrl}/todos/${todoId}/comments/${todoId}`, commentBody);
+  editComment(todoId: string, commentId: string, commentBody: any): Observable<TodoCommentDto[]> {
+    return this.http.patch<TodoCommentDto[]>(`${baseApiUrl}/todos/${todoId}/comments/${commentId}`, commentBody);
   }
 }

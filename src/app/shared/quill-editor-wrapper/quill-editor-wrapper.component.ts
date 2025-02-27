@@ -29,8 +29,9 @@ export class QuillEditorWrapperComponent implements OnInit, OnChanges, ControlVa
 
   @Input() value: string = '';
   @Input() dataId: string = '';
+  @Input() defaultPlaceHolder: string = 'Click to edit description...';
   @Output() valueChange = new EventEmitter<string>();
-  @Input() onSaveAction!: (dataId: string, value: string) => Observable<any>;
+  @Input() onSaveAction!: (value: string) => Observable<any>;
 
 
   isEditing = false;
@@ -52,7 +53,7 @@ export class QuillEditorWrapperComponent implements OnInit, OnChanges, ControlVa
 
   private sanitizeContent(): void {
     this.sanitizedContent = this.sanitizer.bypassSecurityTrustHtml(
-      this.value || 'Click to edit description...'
+      this.value || this.defaultPlaceHolder
     );
   }
 
@@ -107,7 +108,7 @@ export class QuillEditorWrapperComponent implements OnInit, OnChanges, ControlVa
 
   onSave(): void {
     if (this.onSaveAction) {
-      this.onSaveAction(this.dataId, this.value).subscribe({
+      this.onSaveAction(this.value).subscribe({
       next: (b) => {
         this.valueChange.emit(this.value);
         this.onChange(this.value);

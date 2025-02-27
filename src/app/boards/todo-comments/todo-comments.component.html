@@ -1,8 +1,8 @@
 <div class="new-comment">
     <app-quill-editor-wrapper 
       [(ngModel)]="newCommentContent"
-      [dataId]="todoId"
-      [onSaveAction]="saveNewComment">
+      [onSaveAction]="saveNewComment"
+      [defaultPlaceHolder] = "'Create a new comment...'">
     </app-quill-editor-wrapper>
   </div>
 
@@ -15,8 +15,7 @@
          The editor is only editable if the comment is owned by the current user -->
     <app-quill-editor-wrapper 
       [(ngModel)]="comment.content"
-      [dataId]="comment.id"
-      [onSaveAction]="saveEditComment"
+      [onSaveAction]="saveEditCommentWrap(comment.id)"
       >
     </app-quill-editor-wrapper>
   </div>

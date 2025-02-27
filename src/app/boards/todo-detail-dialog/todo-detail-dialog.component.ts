@@ -17,6 +17,7 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { QuillEditorWrapperComponent } from '../../shared/quill-editor-wrapper/quill-editor-wrapper.component';
 import { TodoCommentsComponent } from '../todo-comments/todo-comments.component';
 import { Observable } from 'rxjs';
+import { TodoDto } from '../../dto/todo-dto';
 
 export interface TodoData {
   id: string,
@@ -50,8 +51,8 @@ export class TodoDetailDialogComponent implements OnInit, OnChanges {
   ) {}
 
 
-  saveTodo = (dataId: string, value: string): Observable<any> => {
-    return this.todoService.updateTodo(dataId, { description: value });
+  saveTodo = (value: string): Observable<TodoDto> => {
+    return this.todoService.updateTodo(this.data.id, { description: value }) ;
   };
 
   ngOnInit(): void {

@@ -37,19 +37,24 @@ export class TodoCommentsComponent implements OnInit {
   loadComments(): void {
     // Assume that getCommentsForTodo returns an Observable<Comment[]>
     this.todoService.getCommentsForTodo(this.todoId).subscribe((data: Comment[]) => {
-      this.comments = data;
+      this.comments = data?.reverse();
     });
   }
 
-  saveEditComment = (todoId: string, value: string): Observable<any> => {
-    return this.todoService.editComment(todoId, { text: value });
-  };
+  saveEditCommentWrap( commentId: string) {
+    
+      return (value: string) => this.todoService.editComment(this.todoId, commentId, { text: value });
+   
+  }
 
-  saveNewComment = (todoId: string, value: string): Observable<any> => {
-    return this.todoService.newComment(todoId, { text: value }).pipe(
+
+  saveNewComment = (value: string): Observable<any> => {
+    return this.todoService.newComment(this.todoId, { text: value }).pipe(
       tap(() => {
-        this.loadComments(); // Reload comments after adding a new one
-        this.newCommentContent = ''; // Clear input after saving
+        this.loadComments();
+        setTimeout(() => {
+          this.newCommentContent = '';
+        });
       })
     );
   };

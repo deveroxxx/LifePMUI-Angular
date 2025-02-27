@@ -17,7 +17,7 @@
   <div class="users-list" *ngIf="boardUsers.length > 0">
     <h3>Invited Users</h3>
     <li>
-      <ul *ngFor="let user of boardUsers">
+      <ul *ngFor="let user of boardUsers" class="user-row">
         <div class="user-info">
             <span>
                   {{ user.userName }}  -  {{ permissionMapping[user.permission] }}
