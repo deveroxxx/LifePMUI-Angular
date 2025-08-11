@@ -7,9 +7,10 @@
 
   <div class="description-container">
     <label class="description-label">Description</label>
-    <app-quill-editor-wrapper 
+    <app-quill-editor-wrapper
       [(ngModel)]="data.description"
       [onSaveAction]="saveTodo"
+      [dataId]="data.id"
       (valueChange)="data.description = $event">
   </app-quill-editor-wrapper>
   </div>

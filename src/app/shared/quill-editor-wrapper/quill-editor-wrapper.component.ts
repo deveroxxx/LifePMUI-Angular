@@ -1,12 +1,12 @@
-import { Component, Input, Output, EventEmitter, OnInit, OnChanges } from '@angular/core';
-import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output} from '@angular/core';
+import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
+import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/forms';
 import Quill from 'quill';
-import { TodoService } from '../../service/todo.service'; // Adjust the path as needed
-import { QuillModule } from 'ngx-quill';
-import { NgIf } from '@angular/common';
-import { MatButton } from '@angular/material/button';
-import { Observable } from 'rxjs';
+import {TodoService} from '../../service/todo.service'; // Adjust the path as needed
+import {QuillModule} from 'ngx-quill';
+import {NgIf} from '@angular/common';
+import {MatButton} from '@angular/material/button';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-quill-editor-wrapper',
@@ -84,6 +84,7 @@ export class QuillEditorWrapperComponent implements OnInit, OnChanges, ControlVa
     input.setAttribute('type', 'file');
     input.setAttribute('accept', 'image/*');
     input.click();
+    console.log("YOLO", this)
 
     input.onchange = () => {
       const file = input.files ? input.files[0] : null;
@@ -129,7 +130,7 @@ export class QuillEditorWrapperComponent implements OnInit, OnChanges, ControlVa
   registerOnChange(fn: any): void {
     this.onChange = fn;
   }
-  
+
   registerOnTouched(fn: any): void {
     this.onTouched = fn;
   }

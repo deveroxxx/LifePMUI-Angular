@@ -1,10 +1,10 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
-import { TodoDto } from '../dto/todo-dto';
-import { baseApiUrl } from '../app.config';
-import { TodoCommentDto } from '../dto/todo-comment-dto';
+import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {BehaviorSubject, Observable} from 'rxjs';
+import {tap} from 'rxjs/operators';
+import {TodoDto} from '../dto/todo-dto';
+import {baseApiUrl} from '../app.config';
+import {TodoCommentDto} from '../dto/todo-comment-dto';
 
 @Injectable({
   providedIn: 'root',
@@ -28,7 +28,7 @@ export class TodoService {
   updateTodo(id: string, patchData: any): Observable<TodoDto> {
     return this.http.patch<TodoDto>(`${baseApiUrl}/todos/${id}`, { description: patchData.description }).pipe(
       tap(updatedTodo => {
-        const updatedTodos = this.todosSubject.value.map(todo => 
+        const updatedTodos = this.todosSubject.value.map(todo =>
           todo.id === id ? updatedTodo : todo
         );
         this.todosSubject.next(updatedTodos);
